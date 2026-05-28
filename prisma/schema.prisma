@@ -53,6 +53,8 @@ model User {
   comments    Comment[]
 
   taskAssignees TaskAssignee[]
+
+  createdAt DateTime @default(now())
 }
 
 model Board {
