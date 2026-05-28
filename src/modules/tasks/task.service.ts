@@ -4,29 +4,31 @@ import { TaskColumn } from "@prisma/client";
 export class TaskService {
 
     static async create(
-        boardId: string,
-        title: string,
-        description?: string
-    ) {
-        const board = await prisma.board.findUnique({
-            where: { id: boardId },
-            select: { workspaceId: true },
-        });
+    boardId: string,
+    title: string,
+    description?: string
+) {
+    const board = await prisma.board.findUnique({
+        where: { id: boardId },
+        select: { workspaceId: true },
+    });
 
-        if (!board) {
-            throw new Error("Board not found");
-        }
+    if (!board) {
+        throw new Error("Board not found");
+    }
 
-      return prisma.task.create({
-          data: {
+    const workspaceId = board.workspaceId; // <--- define la variable
+
+    return prisma.task.create({
+        data: {
             boardId,
             workspaceId,
             title,
             description: description ?? null,
             column: "UNASSIGNED",
-          },
-        });
-    }
+        },
+    });
+}
 
     static async list(boardId: string) {
         return prisma.task.findMany({
