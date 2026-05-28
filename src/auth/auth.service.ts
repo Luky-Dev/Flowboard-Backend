@@ -8,13 +8,11 @@ const JWT_SECRET = process.env.JWT_SECRET || "secret";
 const normalizeEmail = (email: string) => email.trim().toLowerCase();
 
 const isValidEmail = (email: string) => {
-  // simple pero sólido (no exagerado tipo RFC completo)
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 };
 
 export class AuthService {
   static async register(email: string, password: string, name?: string) {
-    // ---------- SANITIZE ----------
     if (!email || !password) {
       throw new Error("Email and password are required");
     }
@@ -29,7 +27,6 @@ export class AuthService {
       throw new Error("Invalid email format");
     }
 
-    // ---------- CHECK EXISTS ----------
     const exists = await prisma.user.findUnique({
       where: { email: normalizedEmail },
     });
@@ -38,7 +35,6 @@ export class AuthService {
       throw new Error("User already exists");
     }
 
-    // ---------- CREATE USER ----------
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await prisma.user.create({
@@ -47,14 +43,15 @@ export class AuthService {
         password: hashedPassword,
         name: name ?? null,
       },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        createdAt: true,
+      },
     });
 
-    return {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      createdAt: user.createdAt,
-    };
+    return user;
   }
 
   static async login(email: string, password: string) {
@@ -74,6 +71,13 @@ export class AuthService {
 
     const user = await prisma.user.findUnique({
       where: { email: normalizedEmail },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        password: true,
+        createdAt: true,
+      },
     });
 
     if (!user) {
