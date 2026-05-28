@@ -90,22 +90,4 @@ export class WorkspaceController {
   }
 
 
-  static async getMembers(req: any, res: any) {
-    try {
-      const { workspaceId } = req.params.id;
-
-      const members = await WorkspaceService.getMembers(workspaceId);
-
-      res.json(
-        members.map((m) => ({
-          id: m.user.id,
-          name: m.user.name,
-          email: m.user.email,
-          role: m.role,
-        }))
-      );
-    } catch (err: any) {
-      res.status(400).json({ error: err.message });
-    }
-  }
 }
