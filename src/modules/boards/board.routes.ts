@@ -14,6 +14,5 @@ router.post("/", requireMinRole("ADMIN"), BoardController.create);
 router.get("/", BoardController.list);
 
 router.get("/:boardId", BoardController.getOne);
-router.get("/:id/tasks", BoardController.getTasks);
 
 export default router;
