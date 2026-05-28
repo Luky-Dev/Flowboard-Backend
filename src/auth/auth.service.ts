@@ -45,7 +45,7 @@ export class AuthService {
       data: {
         email: normalizedEmail,
         password: hashedPassword,
-        name,
+        name: name ?? null,
       },
     });
 
