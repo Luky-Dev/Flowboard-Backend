@@ -27,19 +27,24 @@ export class BoardService {
   }
 
 
-  static async createTask(
-    boardId: string,
-    title: string,
-    description?: string
-  ) {
-    return prisma.task.create({
-      data: {
-        title,
-        description: description ?? null,
-        boardId,
-      },
-    });
+static async createTask(boardId: string, title: string, description?: string) {
+  const board = await prisma.board.findUnique({
+    where: { id: boardId },
+  });
+
+  if (!board) {
+    throw new Error("Board not found");
   }
+
+  return prisma.task.create({
+    data: {
+      title,
+      description: description ?? null,
+      boardId,
+      workspaceId: board.workspaceId, // 👈 FIX CLAVE
+    },
+  });
+}
 
   static async deleteTask(taskId: string) {
     return prisma.task.delete({
