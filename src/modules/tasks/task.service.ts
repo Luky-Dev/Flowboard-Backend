@@ -17,15 +17,15 @@ export class TaskService {
             throw new Error("Board not found");
         }
 
-        return prisma.task.create({
-            data: {
-                boardId,
-                workspaceId: board.workspaceId, // 🔥 FIX REAL
-                title,
-                description,
-                column: "UNASSIGNED",
-            },
-        });
+      return prisma.task.create({
+  data: {
+    boardId,
+    workspaceId,
+    title,
+    description: description ?? null,
+    column: "UNASSIGNED",
+  },
+});
     }
 
     static async list(boardId: string) {
