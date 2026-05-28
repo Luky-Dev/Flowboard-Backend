@@ -78,3 +78,10 @@ Backend: Render
 El proyecto no está enfocado en diseño visual, sino en funcionamiento, arquitectura y flujo completo de una aplicación real.
 
 Es un proyecto en evolución.
+
+
+VERSION DEPLOYED
+
+---
+
+https://flowboard-front-end.vercel.app/register
