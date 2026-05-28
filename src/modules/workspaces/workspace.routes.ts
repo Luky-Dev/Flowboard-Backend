@@ -10,7 +10,7 @@ router.use("/:workspaceId/boards", boardRoutes);
 router.post("/", WorkspaceController.create);
 router.get("/:id", WorkspaceController.getOne);
 router.get("/:id/users", WorkspaceController.getUsers);
-
+router.get("/", WorkspaceController.list);
 
 router.get(
     "/:id/boards",
