@@ -17,7 +17,7 @@ router.get(
     loadMembership,
     WorkspaceController.getBoards
 );
-router.get("/:id/members", WorkspaceController.getMembers);
+
 router.post("/:id/invite", WorkspaceController.invite);
 
 
