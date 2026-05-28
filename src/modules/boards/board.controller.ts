@@ -38,19 +38,7 @@ export class BoardController {
     }
   }
 
-  static async getTasks(req: any, res: any) {
-    try {
-      const tasks = await BoardService.getTasks(
-        req.params.id
-      );
 
-      res.json(tasks);
-    } catch (error: any) {
-      res.status(400).json({
-        error: error.message,
-      });
-    }
-  }
 
   static async createTask(req: any, res: any) {
     try {
