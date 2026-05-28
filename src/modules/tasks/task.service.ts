@@ -18,14 +18,14 @@ export class TaskService {
         }
 
       return prisma.task.create({
-  data: {
-    boardId,
-    workspaceId,
-    title,
-    description: description ?? null,
-    column: "UNASSIGNED",
-  },
-});
+          data: {
+            boardId,
+            workspaceId,
+            title,
+            description: description ?? null,
+            column: "UNASSIGNED",
+          },
+        });
     }
 
     static async list(boardId: string) {
